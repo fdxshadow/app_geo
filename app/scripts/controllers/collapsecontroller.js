@@ -9,9 +9,7 @@
  */
 angular.module('appGeoApp')
   .controller('CollapseController', ["$rootScope", "$scope", "$timeout",
-    
     function ($rootScope, $scope, $timeout){
-      console.log($rootScope);
 			$scope.collapse1 = function() {
 					if ($rootScope.Open1 == true) {
 				    	document.getElementById("Collapsible1").style.display = "none";

@@ -204,84 +204,84 @@ angular.module('appGeoApp')
 
       $scope.icons = {
           "planPin": {
-              url: "img/pin-rutafutura.png",
+              url: "images/pin-rutafutura.png",
               scaledSize: pinSize,
               origin: pinOrigin,
               anchor: pinAnchor,
               labelOrigin: pinLabel
           },
           "ventaPin": {
-              url: "img/pin-venta.png",
+              url: "images/pin-venta.png",
               scaledSize: pinSize,
               origin: pinOrigin,
               anchor: pinAnchor,
               labelOrigin: pinLabel
           },
           "naranjoPin": {
-              url: "img/pin-naranjo.png",
+              url: "images/pin-naranjo.png",
               scaledSize: pinSize,
               origin: pinOrigin,
               anchor: pinAnchor,
               labelOrigin: pinLabel
           },
           "amarilloPin": {
-              url: "img/pin-amarillo.png",
+              url: "images/pin-amarillo.png",
               scaledSize: pinSize,
               origin: pinOrigin,
               anchor: pinAnchor,
               labelOrigin: pinLabel
           },
           "noVentaPin": {
-              url: "img/pin-noventa.png",
+              url: "images/pin-noventa.png",
               scaledSize: pinSize,
               origin: pinOrigin,
               anchor: pinAnchor,
               labelOrigin: pinLabel
           },
           "fueraDeRutaPin": {
-              url: "img/pin-venta-fueraderuta.png",
+              url: "images/pin-venta-fueraderuta.png",
               scaledSize: pinSize,
               origin: pinOrigin,
               anchor: pinAnchor,
               labelOrigin: pinLabel
           },
           "gpsPin": {
-              url: "img/pin-gps.png",
+              url: "images/pin-gps.png",
               scaledSize: pinSize,
               origin: pinOrigin,
               anchor: pinAnchor,
               labelOrigin: pinLabel
           },
           "planSq": {
-              url: "img/rutafutura.png",
+              url: "images/rutafutura.png",
               scaledSize: sqSize,
               origin: sqOrigin,
               anchor: sqAnchor,
               labelOrigin: sqLabel
           },
           "ventaSq": {
-              url: "img/venta.png",
+              url: "images/venta.png",
               scaledSize: sqSize,
               origin: sqOrigin,
               anchor: sqAnchor,
               labelOrigin: sqLabel
           },
           "noVentaSq": {
-              url: "img/no venta.png",
+              url: "images/no venta.png",
               scaledSize: sqSize,
               origin: sqOrigin,
               anchor: sqAnchor,
               labelOrigin: sqLabel
           },
           "fueraDeRutaSq": {
-              url: "img/fueraderuta.png",
+              url: "images/fueraderuta.png",
               scaledSize: sqSize,
               origin: sqOrigin,
               anchor: sqAnchor,
               labelOrigin: sqLabel
           },
           "gpsSq": {
-              url: "img/gps.png",
+              url: "images/gps.png",
               scaledSize: sqSize,
               origin: sqOrigin,
               anchor: sqAnchor,
