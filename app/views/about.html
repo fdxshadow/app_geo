@@ -1,0 +1,145 @@
+<nav class="header" ><img class="logo" src="images/logo-caserita.jpg" alt="logo"/>
+    <ul class="left">
+      <li>Georeferenciación</li>
+      <li ng-if="credentials.currentUser.role == 'ADMI' || credentials.currentUser.role == 'SUPE'">Gestión Masiva de Vendedores</li>
+    </ul>
+    <ul class="right">
+      <li class="text" ng-model="credentials">Bienvenido {{credentials.currentUser.name}}</li>
+      <li>
+        <button type="button" ng-click="linkLogin()">Cerrar Sesión</button>
+      </li>
+    </ul>
+</nav>
+<div class="margin"></div>
+<div id="Geo" ng-controller="AboutCtrl">
+  <div class="selectors" ng-controller="CollapseController">
+    <button class="collapse" type="button" ng-click="collapse1()" ng-if="credentials.currentUser.role == 'ADMI' || credentials.currentUser.role == 'SUPE'">Supervisor y rango de fecha</button>
+    <ul class="collapsible" id="Collapsible1">
+      <li ng-if="credentials.currentUser.role == 'ADMI'">
+        <select ng-options="supervisor as supervisor.nombre for supervisor in supervisorsList" ng-model="selectedSupervisor" ng-change="getVendorsBySupervisor(selectedSupervisor.codigo, 'geo')">
+          <option value="" disabled="disabled" selected="selected" hidden="hidden">Seleccione Supervisor</option>
+        </select>
+      </li>
+      <li>
+        <input class="text" ng-model="ctrl.fromDay" placeholder="Fecha de Inicio" moment-picker="ctrl.fromDay" format="DD-MM-YYYY" ng-model-options="{ updateOn: 'blur' }"/>
+      </li>
+      <li>
+        <input class="text" ng-model="ctrl.toDay" placeholder="Fecha de Fin" moment-picker="ctrl.toDay" format="DD-MM-YYYY" ng-model-options="{ updateOn: 'blur' }"/>
+      </li>
+      <li class="sliderContainer">
+        <rzslider class="custom-slider" rz-slider-model="slider.minValue" rz-slider-high="slider.maxValue" rz-slider-options="slider.options"></rzslider>
+      </li>
+    </ul>
+    <button class="collapse" type="button" ng-click="collapse2()" ng-if="credentials.currentUser.role == 'ADMI' || credentials.currentUser.role == 'SUPE'" ng-show="allSelected == false">Seleccionar vendedores</button>
+    <ul class="collapsible" id="Collapsible2" ng-show="allSelected == false">
+      <div class="vendorsWrap">
+        <label ng-repeat="vendor in vendorsList">
+          <input class="check" type="checkbox" ng-model="selectedVendor" ng-change="selectVendor(vendor, selectedVendor)" ng-checked="selectedVendor"/>{{vendor.nombre | limitTo: 24 }}{{vendor.nombre.length > 24 ? '...' : ''}} ({{vendor.codigo}})
+        </label>
+      </div>
+    </ul>
+    <button class="collapse" type="button" ng-click="collapse2()" ng-if="credentials.currentUser.role == 'ADMI' || credentials.currentUser.role == 'SUPE'" ng-show="allSelected == true">Todos los vendedores seleccionados</button>
+    <button class="collapse" type="button" ng-click="collapse3()">Filtros</button>
+    <ul class="collapsible" id="Collapsible3">
+      <div class="filtersWrap">
+        <label ng-repeat="type in types">
+          <input class="check" type="checkbox" ng-model="selectedType" ng-change="selectType(type, selectedType)" ng-init="selectedType=true" ng-checked="selectedType"/>{{type}}
+        </label>
+      </div>
+    </ul>
+  </div>
+  <button class="greenBar" type="button" ng-click="geoMarkers(ctrl.fromDay, ctrl.toDay, slider.minValue, slider.maxValue)">Actualizar Resultados<img ng-hide="hideLoader" src="images/loader.gif" width="20" height="20"/></button>
+  <div class="wrapDatos">
+    <div class="datosLeft">
+      <div class="titleWrap">
+        <h1>Resumen Vendedores</h1>
+      </div>
+      <div class="textWrap" id="DatosPrueba">
+        <p><img src="images/pin-rutafutura.png"/>Planificación: {{visitasPlanificadas}}</p>
+        <p><img src="images/pin-venta.png"/>Ventas: {{ventas}}</p>
+        <p><img src="images/pin-noventa.png"/>No Ventas: {{noVentas}}</p>
+        <p><img src="images/pin-venta-fueraderuta.png"/>Ventas Fuera de Ruta: {{ventasNo}}</p>
+        <p><img src="images/pin-gps.png"/>GPS: {{gps}}</p>
+      </div>
+    </div>
+    <div class="datosCenter">
+      <div class="titleWrap">
+        <h1>Rendimiento</h1>
+      </div>
+      <div class="chartContainer">
+        <canvas id="pieChart"></canvas>
+      </div>
+      <div class="textContainer">
+        <p>
+          <div class="greenDatos"></div>Ventas
+        </p>
+        <p>
+          <div class="redDatos"></div>No Ventas
+        </p>
+        <p>
+          <div class="greyDatos"></div>Visitas Pendientes
+        </p>
+        <p>
+          <div class="futureDatos"></div>Fuera de Ruta
+        </p>
+      </div>
+    </div>
+    <div class="datosRight">
+      <div class="innerDatos">
+        <h1>Total Venta: ${{total | number}}</h1>
+      </div>
+      <div class="innerDatos">
+        <h1>Ticket Promedio: ${{avg | number}}</h1>
+      </div>
+    </div>
+  </div>
+  <div class="tabs" ng-controller="CollapseController" ng-if="credentials.currentUser.role == 'ADMI' || credentials.currentUser.role == 'SUPE'">
+    <button class="tab" id="mapTab" type="button" ng-click="mapTab()">Mapa</button>
+    <button class="tab" id="repTab" type="button" ng-click="repTab()">Reporteria</button>
+  </div>
+  <div id="map"></div>
+  <div id="rep" ng-if="credentials.currentUser.role == 'ADMI' || credentials.currentUser.role == 'SUPE'">
+    <table>
+      <tr class="yellow">
+        <td ng-click="sortBy('ranking')">Ranking
+          <div class="sort" ng-show="sortProperty === 'ranking'" ng-class="{reverse: sortReverse}"></div>
+        </td>
+        <td ng-click="sortBy('codigo')">Vendedor
+          <div class="sort" ng-show="sortProperty === 'codigo'" ng-class="{reverse: sortReverse}"></div>
+        </td>
+        <td ng-click="sortBy('nombre')">Código Vendedor
+          <div class="sort" ng-show="sortProperty === 'nombre'" ng-class="{reverse: sortReverse}"></div>
+        </td>
+        <td ng-click="sortBy('ventas')">Ventas
+          <div class="sort" ng-show="sortProperty === 'ventas'" ng-class="{reverse: sortReverse}"></div>
+        </td>
+        <td ng-click="sortBy('noVentas')">No Ventas
+          <div class="sort" ng-show="sortProperty === 'noVentas'" ng-class="{reverse: sortReverse}"></div>
+        </td>
+        <td ng-click="sortBy('plan')">Visitas Pendientes
+          <div class="sort" ng-show="sortProperty === 'plan'" ng-class="{reverse: sortReverse}"></div>
+        </td>
+        <td ng-click="sortBy('perf')">Rendimiento
+          <div class="sort" ng-show="sortProperty === 'perf'" ng-class="{reverse: sortReverse}"></div>
+        </td>
+        <td ng-click="sortBy('money')">Total Venta
+          <div class="sort" ng-show="sortProperty === 'money'" ng-class="{reverse: sortReverse}"></div>
+        </td>
+        <td ng-click="sortBy('avg')">Ticket Promedio
+          <div class="sort" ng-show="sortProperty === 'avg'" ng-class="{reverse: sortReverse}"></div>
+        </td>
+      </tr>
+      <tr ng-repeat="vendor in reporteria | orderBy:sortProperty:sortReverse">
+        <td># {{reporteria.indexOf(vendor) +1}}</td>
+        <td>{{vendor.nombre}}</td>
+        <td>{{vendor.codigo}}</td>
+        <td>{{vendor.ventas}}</td>
+        <td>{{vendor.noVentas}}</td>
+        <td>{{vendor.plan}}</td>
+        <td>{{vendor.perf | limitTo: 5}}%</td>
+        <td>${{vendor.moneyString}}</td>
+        <td>${{vendor.avgString}}</td>
+      </tr>
+    </table>
+  </div>
+</div>

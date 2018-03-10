@@ -1,0 +1,20 @@
+
+<div class="center-alignment" ng-controller="loginController">
+  <form name="loginForm" novalidate="novalidate">
+    <div class="login">
+      <div class="logocontainer"><img src="images/logo-caserita.jpg" alt="logo"/></div>
+      <input type="text" name="username" id="username" ng-model="username" placeholder="Usuario" required="required"/><br/>
+      <input type="text" name="password" id="password" ng-model="password" placeholder="Contraseña" required="required"/><br/>
+      <button type="submit" ng-click="login()">ENTRAR</button>
+    </div><br/>
+    <div class="errorMsgs">
+      <p class="error" ng-if="loginForm.$submitted &amp;&amp; serError == true"><strong>Error al conectar</strong> al servicio de login.</p>
+      <div ng-if="serError == false">
+        <p class="error" ng-if="loginForm.$submitted &amp;&amp; loginForm.$error.user">El <strong>nombre de usuario</strong> o la <strong>contraseña</strong> son incorrectos.</p>
+        <p class="error" ng-if="loginForm.$submitted &amp;&amp; username == null">Debe indicar <strong>usuario</strong>.</p>
+        <p class="error" ng-if="loginForm.$submitted &amp;&amp; password == null">Debe indicar <strong>contraseña</strong>.</p>
+      </div>
+    </div>
+  </form>
+  <p class="copyright">2017 © La Caserita</p>
+</div>
