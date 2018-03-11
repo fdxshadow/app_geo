@@ -1,7 +1,7 @@
-<nav class="header" ><img class="logo" src="images/logo-caserita.jpg" alt="logo"/>
+<nav class="header" ng-controller="LinkCtrl" ><img class="logo" src="images/logo-caserita.jpg" alt="logo"/>
     <ul class="left">
-      <li>Georeferenciación</li>
-      <li ng-if="credentials.currentUser.role == 'ADMI' || credentials.currentUser.role == 'SUPE'">Gestión Masiva de Vendedores</li>
+      <li ng-click="linkGeo()">Georeferenciación</li>
+      <li ng-click="linkGes()" ng-if="credentials.currentUser.role == 'ADMI' || credentials.currentUser.role == 'SUPE'">Gestión Masiva de Vendedores</li>
     </ul>
     <ul class="right">
       <li class="text" ng-model="credentials">Bienvenido {{credentials.currentUser.name}}</li>
@@ -14,7 +14,7 @@
 <div id="Geo" ng-controller="AboutCtrl">
   <div class="selectors" ng-controller="CollapseController">
     <button class="collapse" type="button" ng-click="collapse1()" ng-if="credentials.currentUser.role == 'ADMI' || credentials.currentUser.role == 'SUPE'">Supervisor y rango de fecha</button>
-    <ul class="collapsible" id="Collapsible1">
+    <ul class="collapsible" id="Collapsible1" style="display: none;">
       <li ng-if="credentials.currentUser.role == 'ADMI'">
         <select ng-options="supervisor as supervisor.nombre for supervisor in supervisorsList" ng-model="selectedSupervisor" ng-change="getVendorsBySupervisor(selectedSupervisor.codigo, 'geo')">
           <option value="" disabled="disabled" selected="selected" hidden="hidden">Seleccione Supervisor</option>

@@ -250,7 +250,6 @@ div.selectors {
     border: 1px solid #F7F7F7;
     cursor: pointer; }
   div.selectors ul.collapsible {
-    display: none;
     list-style-type: none;
     padding: 0; }
     div.selectors ul.collapsible select {

@@ -16,7 +16,7 @@
                       AuthenticationService.SetCredentials($scope.username, login.nombreSupervisor, login.codigoSupervisor, login.tipoUsuario);
                       console.dir($rootScope.credentials.currentUser);
                       console.log($rootScope);
-                      $location.path("/about");
+                      $location.path("/geo");
                   }
                   else if (login.estado == -1) {
                       $scope.loginForm.$setValidity("user", false);

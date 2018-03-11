@@ -15,7 +15,10 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'rzModule',
+    'moment-picker',
+    'GoogleMapsNative'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -24,10 +27,11 @@ angular
         controller: 'loginController',
         controllerAs: 'main'
       })
-      .when('/about', {
+      .when('/geo', {
         templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
+      })
+      .when('/ges',{
+        templateUrl:'views/gestion_masiva.html',
       })
       .otherwise({
         redirectTo: '/'
