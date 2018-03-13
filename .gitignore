@@ -3,3 +3,6 @@
 /.tmp
 /.sass-cache
 /bower_components
+.vagrant
+Vagrantfile
+ubuntu-xenial-16.04-cloudimg-console.log

@@ -5,7 +5,9 @@
       <div class="logocontainer"><img src="images/logo-caserita.jpg" alt="logo"/></div>
       <input type="text" name="username" id="username" ng-model="username" placeholder="Usuario" required="required"/><br/>
       <input type="text" name="password" id="password" ng-model="password" placeholder="Contraseña" required="required"/><br/>
-      <button type="submit" ng-click="login()">ENTRAR</button>
+      <button type="submit" ng-click="login()">ENTRAR
+        <div class="elgranproblema"><img class="loader" ng-hide="hideLoginLoader" src="images/loader.gif" width="20" height="20"/></div>
+      </button>
     </div><br/>
     <div class="errorMsgs">
       <p class="error" ng-if="loginForm.$submitted &amp;&amp; serError == true"><strong>Error al conectar</strong> al servicio de login.</p>

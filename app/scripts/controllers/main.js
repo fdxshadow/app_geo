@@ -6,7 +6,9 @@
   app.controller("loginController",
   ['$scope', '$rootScope', '$location', 'AuthenticationService',
       function ($scope, $rootScope, $location, AuthenticationService) {
+          $scope.hideLoginLoader = true;
           $scope.login = function () {
+              $scope.hideLoginLoader = false;
               AuthenticationService.ClearCredentials();
               AuthenticationService.Login($scope.username, $scope.password, function(response) {
                   var login = response.data;
@@ -22,6 +24,7 @@
                       $scope.loginForm.$setValidity("user", false);
                       $scope.username = "";
                       $scope.password = "";
+                      $scope.hideLoginLoader = true;
                   };
               });
           };

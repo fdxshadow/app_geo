@@ -14,17 +14,17 @@
 <div id="Geo" ng-controller="AboutCtrl">
   <div class="selectors" ng-controller="CollapseController">
     <button class="collapse" type="button" ng-click="collapse1()" ng-if="credentials.currentUser.role == 'ADMI' || credentials.currentUser.role == 'SUPE'">Supervisor y rango de fecha</button>
-    <ul class="collapsible" id="Collapsible1" style="display: none;">
+    <ul class="collapsible" id="Collapsible1">
       <li ng-if="credentials.currentUser.role == 'ADMI'">
         <select ng-options="supervisor as supervisor.nombre for supervisor in supervisorsList" ng-model="selectedSupervisor" ng-change="getVendorsBySupervisor(selectedSupervisor.codigo, 'geo')">
           <option value="" disabled="disabled" selected="selected" hidden="hidden">Seleccione Supervisor</option>
         </select>
       </li>
       <li>
-        <input class="text" ng-model="ctrl.fromDay" placeholder="Fecha de Inicio" moment-picker="ctrl.fromDay" format="DD-MM-YYYY" ng-model-options="{ updateOn: 'blur' }"/>
+        <input class="text" ng-model="ctrl.fromDay" placeholder="Fecha de Inicio" moment-picker="ctrl.fromDay" format="DD-MM-YYYY" max-date="today" ng-model-options="{ updateOn: 'blur' }"/>
       </li>
       <li>
-        <input class="text" ng-model="ctrl.toDay" placeholder="Fecha de Fin" moment-picker="ctrl.toDay" format="DD-MM-YYYY" ng-model-options="{ updateOn: 'blur' }"/>
+        <input class="text" ng-model="ctrl.toDay" placeholder="Fecha de Fin" moment-picker="ctrl.toDay" format="DD-MM-YYYY" min-date="ctrl.fromDay" max-date="today" ng-model-options="{ updateOn: 'blur' }"/>
       </li>
       <li class="sliderContainer">
         <rzslider class="custom-slider" rz-slider-model="slider.minValue" rz-slider-high="slider.maxValue" rz-slider-options="slider.options"></rzslider>

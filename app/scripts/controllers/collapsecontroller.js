@@ -17,7 +17,7 @@ angular.module('appGeoApp')
 				    	else {
 							document.getElementById("Collapsible1").style.display = "inline-block";
 				    		$rootScope.Open1 = true;
-				    		
+
 				    		//Actualiza la posición del slider, de lo contrario se bugea
 				    		$timeout(function () {
 						        $scope.$broadcast('rzSliderForceRender');
@@ -56,7 +56,6 @@ angular.module('appGeoApp')
 					document.getElementById("map").style.display = "none";
 					document.getElementById("rep").style.display = "inline-block";
 					document.getElementById("mapTab").style.backgroundColor = "#F8F8F8";
-					document.getElementById("repTab").style.backgroundColor = "white";		
+					document.getElementById("repTab").style.backgroundColor = "white";
 			}
 		}])
-

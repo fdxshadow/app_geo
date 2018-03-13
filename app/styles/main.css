@@ -15,9 +15,17 @@ body {
   background-color: white;
   width: 420px;
   margin-top: 18px; }
-  .login img {
-    margin-top: 9px;
-    margin-bottom: 4px; }
+  .login .elgranproblema {
+    width: 20px;
+    position: absolute;
+    background-color: green;
+    right: 160px;
+    top: 15px; }
+    .login .elgranproblema img.loader {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: 0 auto; }
   .login div.logocontainer {
     background-color: #F9EF28;
     margin-bottom: 32px; }
@@ -42,6 +50,7 @@ body {
       color: #C8D0DA; }
   .login button {
     border: none;
+    position: relative;
     width: 100%;
     padding: 17px;
     background-color: #F03A3D;
@@ -250,6 +259,7 @@ div.selectors {
     border: 1px solid #F7F7F7;
     cursor: pointer; }
   div.selectors ul.collapsible {
+    display: none;
     list-style-type: none;
     padding: 0; }
     div.selectors ul.collapsible select {
