@@ -204,6 +204,12 @@ div.tabs {
   height: 400px;
   width: 100%; }
 
+#mapa {
+  height: 400px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;}
+
 #rep {
   width: 100%;
   background-color: white;

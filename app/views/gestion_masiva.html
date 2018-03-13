@@ -14,7 +14,7 @@
   <div id="Ges" ng-controller="GestionMasivaCtrl" >
     <div class="selectors" >
       <button class="collapse" ng-click="mostrar(1)" type="button" ng-if="credentials.currentUser.role == 'ADMI' || credentials.currentUser.role == 'SUPE'">Supervisor y rango de fecha</button>
-      <ul class="collapsible" ng-if="collapsea" id="Collapsible1">
+      <ul class="collapsible" ng-if="collapsea" id="Collapsible1" style="display: inline-block">
         <li ng-if="credentials.currentUser.role == 'ADMI'">
           <select ng-options="supervisor as supervisor.nombre for supervisor in supervisores" ng-model="selectedSupervisor" ng-change="getvendedores(selectedSupervisor.codigo)">
             <option value="" disabled="disabled" selected="selected" >Seleccione Supervisor</option>
@@ -28,7 +28,7 @@
         </li>
       </ul>
       <button class="collapse" type="button" ng-click="mostrar(2)" ng-if="credentials.currentUser.role == 'ADMI' || credentials.currentUser.role == 'SUPE'">Ranking vendedores según visitas para supervisor seleccionado</button>
-      <ul class="collapsible" ng-if="collapseb" id="Collapsible2">
+      <ul class="collapsible" ng-if="collapseb" id="Collapsible2" style="display: inline-block">
         <div class="vendorsWrap">
           <label ng-repeat="vendedor in vendedores"><span> {{vendedor.nombreVendedor }}</span></label>
         </div>
@@ -43,7 +43,7 @@
         <div class="green"></div>75-100%
       </p>
     </div>
-    <div id=map style="position: relative; overflow: hidden;">
+    <div id="mapa">
       <gm-map options="{center: [-33.455,-70.655], zoom: 9, mapTypeId: google.maps.MapTypeId.TERRAIN}">
       </gm-map>
     </div>
