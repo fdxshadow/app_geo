@@ -44,7 +44,9 @@
       </p>
     </div>
     <div id="mapa">
-      <gm-map options="{center: [-33.455,-70.655], zoom: 9, mapTypeId: google.maps.MapTypeId.TERRAIN}">
+      <gm-map gm-then="bindMap(map)" options="{center: [-33.455,-70.655], zoom: 9, mapTypeId: google.maps.MapTypeId.TERRAIN}">
+        <gm-marker ng-repeat="marcador in marcadores" on-click="showInfoWindow(map,marker,marcador)" options="{position: marcador.position, icon:marcador.icon}">
+        </gm-marker>
       </gm-map>
     </div>
   </div>
