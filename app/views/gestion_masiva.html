@@ -21,7 +21,7 @@
           </select>
         </li>
         <li>
-          <input class="text" ng-model="ctrl.day" placeholder="Seleccione día" moment-picker="ctrl.toDay" format="DD-MM-YYYY" ng-model-options="{ updateOn: 'blur' }"/>
+          <input class="text" ng-model="dia" placeholder="Seleccione día" moment-picker="dia" format="YYYY-MM-DD" ng-model-options="{ updateOn: 'blur' }"/>
         </li>
         <li class="sliderContainer">Hora del día
           <rzslider class="custom-slider" rz-slider-model="slider.minValue" rz-slider-high="slider.maxValue" rz-slider-options="slider.options"></rzslider>
@@ -34,7 +34,7 @@
         </div>
       </ul>
     </div>
-    <button class="greenBar" type="button" ng-disabled="saving" ng-click="gesMarkers(ctrl.day, slider.minValue, slider.maxValue)">Actualizar Resultados<img ng-hide="hideLoader" src="images/loader.gif" width="20" height="20"/></button>
+    <button class="greenBar" type="button" ng-disabled="saving" ng-click="getMarcadores(toString(dia), slider.minValue, slider.maxValue)">Actualizar Resultados<img ng-hide="hideLoader" src="images/loader.gif" width="20" height="20"/></button>
     <div class="info">
       <p>Información sobre el rendimiento de ventas
         <div class="red"></div>0-25%

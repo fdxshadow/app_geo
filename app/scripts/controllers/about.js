@@ -989,7 +989,8 @@
              $rootScope.$broadcast('finishedCustomMarkersEvent');
          };
 
-         function planMarkers(fromDay, toDay, page) {
+         function 
+         planMarkers(fromDay, toDay, page) {
              $rootScope.routeErrors = 0;
          	$rootScope.countingMarkers = 0;
          	$rootScope.markersQuerys = 0;
@@ -1108,7 +1109,7 @@
              };
 
          $scope.hideLoader = true;
-         $rootScope.geoMarkers = function (fromDay, toDay, fromHour, toHour) {
+         $scope.geoMarkers = function (fromDay, toDay, fromHour, toHour) {
              // if ($rootScope.credentials.currentUser.role !== "ADMI" && $rootScope.credentials.currentUser.role !== "SUPE") {
              //   fromDay = "2018/01/29";
              //   toDay = "2018/01/29";

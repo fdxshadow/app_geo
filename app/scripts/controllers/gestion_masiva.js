@@ -17,6 +17,8 @@ angular.module('appGeoApp')
     var pinSize = new google.maps.Size(30, 45); // Tamanio de los pines
     $scope.marcadores = []; // Lista de marcadores
 
+
+    $scope.dia;
     $scope.collapsea=false;
     $scope.collapseb=false;
     $scope.hideLoader=true;
@@ -46,16 +48,28 @@ angular.module('appGeoApp')
     $scope.mapa = map;
   }
 
+  console.log($scope.dia);
+
   /* Funcion que se ejecuta al presionar el boton 'Actualizar resultados' */
-  $scope.gesMarkers = function(day, fromHour, toHour){
-    console.log("$scope.map",$rootScope.map);
-    $scope.hideLoader=false; // Mostramos el loader en boton 'Actualizar resultados'
-    /* Llamar al servicio con promesas */
+  $scope.getMarcadores = function(dia, from_hour, to_hour) {
+    $scope.hideLoader = false;
+    gestionservice.Marcadores($scope.vendedores, moment(dia).format('YYYY-MM-DD'), moment(dia).format('YYYY-MM-DD'), from_hour, to_hour).
+    then(function (response) {
+      console.log(response);
+      $scope.hideLoader = true;
+    }).catch(function (err) {
+      console.log(err);
+    })
+
+
+  }
+
+
     /* Hacer calculos correspondientes para obtener rendimiento de los vendedores*/
 
     /* Yo me imagino la respuesta asi, pero no tiene por que serlo. Es a modo de ejemplo,
     cada elemento de la respuesta es un vendedor */
-    var respuesta = [
+   /* var respuesta = [
       {
         codigo: 1111,
         nombre: "Paola Munoz",
@@ -101,21 +115,21 @@ angular.module('appGeoApp')
         visitasPendientes: 2,
         montoVentas: 150000
       }
-    ]
+    ]*/
 
     /* Una vez que se tienen las respuestas necesarias, agregar cada marcador a la
     lista de marcadores, con su respectiva información (es el codigo a continuacion)*/
 
     /* Seteamos los limites a cero */
-    bounds = new google.maps.LatLngBounds();
+   /* bounds = new google.maps.LatLngBounds();
     /* Se recorre la respuesta para crear los marcadores */
-    for (var i = 0 ; i < respuesta.length ; i++ ) {
+    /*for (var i = 0 ; i < respuesta.length ; i++ ) {
       var marcador = {};
       var position = new google.maps.LatLng(respuesta[i].posicion.latitud, respuesta[i].posicion.longitud);
       marcador.position = position;
 
       /* Parseamos los datos de la respuesta */
-      var rendimiento = respuesta[i].rendimiento;
+     /* var rendimiento = respuesta[i].rendimiento;
       var ranking = respuesta[i].ranking;
       var nombre = respuesta[i].nombre;
       var visitasPendientes = respuesta[i].visitasPendientes;
@@ -125,7 +139,7 @@ angular.module('appGeoApp')
       var ticketPromedio = montoVentas / cantidadVentas;
 
       /* Verificamos el rendimiento del vendedor actual, para asignarle el pin correspondiente */
-      if (rendimiento <= 25){
+     /* if (rendimiento <= 25){
         marcador.icon = {url: '/images/pin-noventa.png', scaledSize: pinSize};
       } else if (rendimiento > 25 && rendimiento <= 50) {
         marcador.icon = {url: '/images/pin-amarillo.png', scaledSize: pinSize};
@@ -133,10 +147,10 @@ angular.module('appGeoApp')
         marcador.icon = {url: '/images/pin-naranjo.png', scaledSize: pinSize};
       } else if (rendimiento > 75) {
         marcador.icon = {url: '/images/pin-venta.png', scaledSize: pinSize};
-      }
+      }*
 
       /* Generamos el contenido del infowindow con formato HTML */
-      marcador.infowindow = {};
+   /*   marcador.infowindow = {};
       marcador.infowindow.content = '<h2 class="infoWindowTitle">' + nombre + '</h2>' + '<div class="infoWindowContent"><ul>' + '<li>' + "Ranking: #" + ranking + '</li>' + '<li>' + "Ventas: " + cantidadVentas + '</li>' + '<li>' + "No Ventas: " + cantidadNoVentas + '</li>' +'<li>' + "Visitas Pendientes: " + visitasPendientes  + '</li>' + '<li>' + "Total Venta: " + $filter('currency')(montoVentas) + '</li>' + '<li>' + "Ticket Promedio: " + $filter('currency')(ticketPromedio) + '</li>' + '</ul></div>';
 
       $scope.marcadores.push(marcador); // Agregamos el marcador a la lista de marcadores
@@ -144,7 +158,7 @@ angular.module('appGeoApp')
     }
     $scope.mapa.fitBounds(bounds); // Seteamos los limites del mapa, para que todos los marcadores queden dentro
     $scope.hideLoader=true; //Ocultamos el loader en boton 'Actualizar resultados'
-  }
+  }*/
 
   /* BORRAR ESTO. Ejemplo de la estructura de cada marcador. Lo deje para que veas como es la
   estructura no mas */
