@@ -29,8 +29,6 @@ angular.module('appGeoApp')
     }
 
     function Marcadores(vendedor_ids,from_day,to_day,from_hour,to_hour) {
-      console.log(from_day);
-
       var fd = new FormData();
 
       for (var i = 0; i < vendedor_ids.length; i++)

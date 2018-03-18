@@ -140,8 +140,45 @@ angular.module('appGeoApp')
         codigoSupervisor: "All"
     };
 
-    factory.getSupervisors = function (a, page, callback) {
+    // factory.getSupervisors = function (a, page, callback) {
+    //
+    //     $http.post(config.ipPlanServer + "ServiciosCaseritaWEB/servicioRest/vendedor/post", {
+    //         codigoSupervisor : a })
+    //     .then(
+    //         function successCallback(response){
+    //             var currentPage;
+    //
+    //             if ($location.path() == "/ges") {
+    //                 currentPage = "ges"
+    //             }
+    //             else if ($location.path() == "/geo") {
+    //                 currentPage = "geo"
+    //             };
+    //             if (currentPage == page) {
+    //                 if (response.data.codigoEstado !== -2) {
+    //                     addSupervisor(response.data[0]);
+    //                     factory.getSupervisors(a + 1, page);
+    //                 }
+    //                 else {
+    //                     addSupervisor(Todos);
+    //                 }
+    //             }
+    //
+    //         },
+    //         function errorCallback(response){
+    //             //console.log("getSupervisors failed");
+    //         })
+    // };
 
+
+    /* Descomentar lo de arriba y comentar lo de abajo. Parche provisorio para obtener todos los
+       supervisores que existen actualmente */
+    $rootScope.contador = 0;
+    factory.getSupervisors = function (a, page, callback) {
+        if ($rootScope.todosAgregado) {
+          $rootScope.contador = 0;
+          $rootScope.todosAgregado = false;
+        }
         $http.post(config.ipPlanServer + "ServiciosCaseritaWEB/servicioRest/vendedor/post", {
             codigoSupervisor : a })
         .then(
@@ -160,7 +197,13 @@ angular.module('appGeoApp')
                         factory.getSupervisors(a + 1, page);
                     }
                     else {
-                        addSupervisor(Todos);
+                        $rootScope.contador++;
+                        if ($rootScope.contador > 10) {
+                          $rootScope.todosAgregado = true;
+                          addSupervisor(Todos);
+                        } else {
+                          factory.getSupervisors(a + 1, page);
+                        }
                     }
                 }
 

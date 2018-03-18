@@ -615,3 +615,9 @@ button.greenBar img {
     padding: 0; }
   .infoWindowContent p.addressGenerated {
     font-style: italic; }
+.infoWindowContent li span {
+  font-weight: 400;
+}
+#Collapsible1Ges, #Collapsible2Ges {
+  display: inline-block;
+}
