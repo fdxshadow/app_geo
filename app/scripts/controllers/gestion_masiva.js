@@ -23,8 +23,27 @@ angular.module('appGeoApp')
     $scope.collapsea=false;
     $scope.collapseb=false;
     $scope.hideLoader=true;
+
+
+
+   /* gestionservice.Supervisores(1).then(function (response) {
+      console.log("hola");
+      //$scope.supervisores = response;
+      console.log(response);
+    }).catch(function (error) {
+      console.log(error);
+    })*/
+
     $scope.supervisores = $rootScope.supervisorsList;
-    console.log("$scope.supervisores",$scope.supervisores);
+
+
+
+
+
+
+
+
+    //console.log("$scope.supervisores",$scope.supervisores);
     $scope.slider = {
       minValue: "00:00",
       maxValue: "23:59",
@@ -41,7 +60,7 @@ angular.module('appGeoApp')
        la vista de Georeferenciacion) */
 
     /* Si el usuario es Supervisor, se obtienen los vendedores asociados a él */
-    console.log($rootScope.credentials.currentUser);
+    //console.log($rootScope.credentials.currentUser);
     if ($rootScope.credentials.currentUser.role == "SUPE") {
       var codigo = $rootScope.credentials.currentUser.code;
       gestionservice.Vendedores(codigo)
@@ -56,7 +75,10 @@ angular.module('appGeoApp')
 
     /* Función utilizada para obtener los vendedores del Supervisor seleccionado (si el usuario es ADMIN) */
     $scope.getvendedores = function(codigo){
-      console.log("codigo",codigo);
+      $scope.vendedoresConRank = [];
+      $scope.vendedoresSinRank = [];
+      $scope.collapseb = ($scope.collapseb)?!$scope.collapseb:$scope.collapseb;
+       console.log("codigo",codigo);
       if (codigo == 'All') { // Si la opcion elegida es "TODOS LOS SUPERVISORES"
         $scope.vendedores = [];
         /* Por cada supervisor en la lista de supervisores, se traen los vendedores asociados a él */
@@ -81,7 +103,7 @@ angular.module('appGeoApp')
         gestionservice.Vendedores(codigo)
         .then(function(response){
           $scope.vendedores = response.data
-          console.log(response.data);
+          //console.log(response.data);
         })
         .catch(function(err){
           console.log(err);
@@ -110,6 +132,7 @@ angular.module('appGeoApp')
 
     /* Funcion que se ejecuta al presionar el boton 'Actualizar resultados' */
     $scope.getMarcadores = function(dia, from_hour, to_hour) {
+
       $scope.hideLoader = false;
       if ($scope.vendedores === undefined){ // Validamos que se haya seleccionado supervisor.
         alert("Debe seleccionar supervisor.");
@@ -136,8 +159,9 @@ angular.module('appGeoApp')
             marcador.position = position;
 
             /* Parseamos los datos de la respuesta */
-            //var visitasPendientes = respuesta[i].planificacion;
-            var visitasPlanificadas = 30; // BORRAR ESTO. Se debe obtener valor desde el servicio (linea de arriba).
+            var visitasPlanificadas = respuesta[i].planificacion;
+            console.log(respuesta[i].planificacion);
+            //var visitasPlanificadas = 30; // BORRAR ESTO. Se debe obtener valor desde el servicio (linea de arriba).
             var vendedorId = respuesta[i].vendedor_id;
             var nombre = respuesta[i].nombre;
             var cantidadVentas = respuesta[i].ventas;
@@ -146,7 +170,6 @@ angular.module('appGeoApp')
             var ticketPromedio = respuesta[i].ticket;
 
             var rendimiento = ((cantidadVentas+cantidadNoVentas)/visitasPlanificadas)*100;
-
             marcador.visitasPlanificadas = visitasPlanificadas;
             marcador.vendedorId = vendedorId;
             marcador.nombre = nombre;
@@ -160,9 +183,9 @@ angular.module('appGeoApp')
             if (rendimiento <= 25){
               marcador.icon = {url: '/images/pin-noventa.png', scaledSize: pinSize};
             } else if (rendimiento > 25 && rendimiento <= 50) {
-              marcador.icon = {url: '/images/pin-amarillo.png', scaledSize: pinSize};
-            } else if (rendimiento > 50 && rendimiento <= 75) {
               marcador.icon = {url: '/images/pin-naranjo.png', scaledSize: pinSize};
+            } else if (rendimiento > 50 && rendimiento <= 75) {
+              marcador.icon = {url: '/images/pin-amarillo.png', scaledSize: pinSize};
             } else if (rendimiento > 75) {
               marcador.icon = {url: '/images/pin-venta.png', scaledSize: pinSize};
             }
@@ -219,6 +242,7 @@ angular.module('appGeoApp')
           $scope.mapa.setOptions({zoom: 9,center: new google.maps.LatLng(-33.455, -70.655),mapTypeId: google.maps.MapTypeId.TERRAIN});
         }
         $scope.hideLoader=true; //Ocultamos el loader en boton 'Actualizar resultados'
+        $scope.collapseb = ($scope.collapseb)?$scope.collapseb:!$scope.collapseb;
       })
       .catch(function (err) {
         console.log(err);

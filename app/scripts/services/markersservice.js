@@ -115,7 +115,7 @@ angular.module('appGeoApp')
             vendedor : codigoVendedor , dia : dia })
             .then(
                 function successCallback(response){
-                    //console.log(response);
+                    console.log("planificacion",response);
                     callback(response);
                 },
                 function errorCallback(response){
