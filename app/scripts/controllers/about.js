@@ -1166,7 +1166,7 @@
                      clearInterval(interval);
                  }
                  //do whatever here..
-             }, 1000);
+             }, 8000);
 
          };
          $rootScope.$on('finishedCustomMarkersEvent', function () {

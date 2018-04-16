@@ -42,7 +42,7 @@ angular.module('appGeoApp')
       var promise = defered.promise;
       $http({
         method: "POST",
-        url:'http://200.68.49.232/geolocation/markers',
+        url:'http://200.68.49.232:81/geolocation/markers',
         transformRequest: angular.identity,
         headers: {'Content-Type': undefined},
         data: fd}).
